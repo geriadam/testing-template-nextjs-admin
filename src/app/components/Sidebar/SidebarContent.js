@@ -113,30 +113,30 @@ function SidebarContent() {
               </Link>
             </li>
           ) : (
-            <>
-            <div class="flex flex-col space-y-4 items-start justify-end px-6 py-4">
-              <p class="w-full text-sm font-semibold leading-normal text-gray-400 pt-4 border-t border-[#D4DCE7]">{route.name}</p>
+            <div key={route.name}>
+              <div class="flex flex-col space-y-4 items-start justify-end px-6 py-4">
+                <p class="w-full text-sm font-semibold leading-normal text-gray-400 pt-4 border-t border-[#D4DCE7]">{route.name}</p>
+              </div>
+                {route.child.map((childRoute) => (
+                  <div key={childRoute.name}>
+                    {childRoute.routes ? (
+                      <SidebarSubmenu key={childRoute.name} route={childRoute} />
+                    ) : (
+                      <div className='relative flex items-center px-6 py-4 hover:bg-[#ECF5FF]'>
+                        <Link
+                          key={childRoute.name}
+                          href="/"
+                          className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 text-gray-900 hover:text-blue-500 dark:hover:text-gray-200"
+                          activeClassName="text-blue-500"
+                        >
+                          <Icon className="w-5 h-5" aria-hidden="true" icon={childRoute.icon} />
+                          <span className="ml-4">{childRoute.name}</span>
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                ))}
             </div>
-              {route.child.map((childRoute) => (
-                <div>
-                  {childRoute.routes ? (
-                    <SidebarSubmenu key={childRoute.name} route={childRoute} />
-                  ) : (
-                    <div className='relative flex items-center px-6 py-4 hover:bg-[#ECF5FF]'>
-                      <Link
-                        key={childRoute.name}
-                        href="/"
-                        className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 text-gray-900 hover:text-blue-500 dark:hover:text-gray-200"
-                        activeClassName="text-blue-500"
-                      >
-                        <Icon className="w-5 h-5" aria-hidden="true" icon={childRoute.icon} />
-                        <span className="ml-4">{childRoute.name}</span>
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </>
           )
         ))}
       </ul>
